@@ -1,5 +1,12 @@
 # reference: https://docs.python.org/3/library/hashlib.html
 # https://pypi.org/project/hashlib/
+# https://readthedocs.org/projects/hashlib/
+# https://circuitpython.readthedocs.io/projects/hashlib/en/latest/
+# https://github.com/adafruit/Adafruit_CircuitPython_hashlib
+
+# Other references for hash tables in python:
+# https://www.geeksforgeeks.org/python-hash-method/'
+# https://www.geeksforgeeks.org/applications-of-hashing/
 
 import hashlib
 
