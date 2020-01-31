@@ -3,6 +3,7 @@
 # https://readthedocs.org/projects/hashlib/
 # https://circuitpython.readthedocs.io/projects/hashlib/en/latest/
 # https://github.com/adafruit/Adafruit_CircuitPython_hashlib
+# https://www.pythoncentral.io/hashing-strings-with-python/
 
 # Other references for hash tables in python:
 # https://www.geeksforgeeks.org/python-hash-method/'
@@ -20,3 +21,8 @@ print(m.digest_size)
 print(m.block_size)
 
 print(hashlib.sha224(b"Nobody inspects the spammish repetition").hexdigest())
+
+# reference: https://www.pythoncentral.io/hashing-strings-with-python/
+print("\n\nHash object:")
+hash_object = hashlib.md5(b'Hello World')
+print(hash_object.hexdigest())
