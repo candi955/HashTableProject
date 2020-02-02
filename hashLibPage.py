@@ -74,8 +74,26 @@ print("\n---------------------Trying the Key Derivation method------------------
 # Derived-Key (dk)
 # Password-based key derivation function 2
 # (hash_name, password, salt, iterations, dklen)  side note: at least 100,000 iterations of SHA-256 are suggested
-dk = hashlib.pbkdf2_hmac('sha256', b'string', b'salt', 100000)
-print(dk)
+dk = hashlib.pbkdf2_hmac('sha256', b'password', b'salt', 100000)
+print("\n", dk)
+
+
+# reference: https://www.journaldev.com/17357/python-hash-function
+# https://stackoverflow.com/questions/114830/is-a-python-dictionary-an-example-of-a-hash-table
+
+class hashClass():
+    def _employee_(self, lastName, firstName, empNum, dob):
+        self.lastName = lastName
+        self.firstName = firstName
+        self.empNum = empNum
+        self.dob = dob
+
+    def _updatedInfo_(self, updatedInfo):
+        return self.lastName == updatedInfo.lastName and self.firstName == updatedInfo.firstName and\
+               self.empNum == updatedInfo.empNum and self.dob == updatedInfo.dob
+
+    def _hashAndSalt_(self):
+        return dk((self.lastName, self.firstName, self.empNum, self.dob))
 
 
 
