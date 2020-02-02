@@ -81,6 +81,7 @@ print("\n", dk)
 # https://stackoverflow.com/questions/114830/is-a-python-dictionary-an-example-of-a-hash-table
 
 class hashClass():
+    dk = hashlib.pbkdf2_hmac('sha256', b'password', b'salt', 100000)
     def _init_(self, lastName, firstName, empNum, dob):
         self.lastName = lastName
         self.firstName = firstName
@@ -88,6 +89,16 @@ class hashClass():
         self.dob = dob
 
     def _updatedInfo_(self, updatedInfo):
+        self.lastName = input("\nPlease enter your last name: ")
+
+        self.firstName = input("\nPlease enter your first name: ")
+
+        self.empNum = input("\nPlease enter your employee number: ")
+
+        self.newDOB = input("\nPlease enter your date-of-birth(DD-MMM-YYYY: ")
+
+        print(self.lastName, self.firstName, self.empNum, self.newDOB)
+
         return self.lastName == updatedInfo.lastName and self.firstName == updatedInfo.firstName and\
                self.empNum == updatedInfo.empNum and self.dob == updatedInfo.dob
 
@@ -96,11 +107,26 @@ class hashClass():
 
 hashClass()
 
-theHash = hashClass()
-
 def _main_(self):
+
+    theHash = hashClass()
+
     my_table = {"my_key": (theHash._updatedInfo_(self.lastName), theHash._updatedInfo_(self.firstName),
                            theHash._updatedInfo_(self.empNum), theHash._updatedInfo_(self.dob))}
+
+    theHash.__init__()
+    theHash._updatedInfo_()
+    theHash._hashAndSalt_()
+
+
+
+
+
+
+
+
+
+
 
 
 
