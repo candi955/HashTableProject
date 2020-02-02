@@ -39,19 +39,28 @@ startGreen = '\033[92m'
 startYellow = '\033[93m'
 startRed = '\033[91m'
 
-
+m = hashlib.sha256()
 # Creating the data values
-data = ['Jane Doe, 03/30/1956', 'Jim Davis, 4/15/1983', 'Mindy Watkins, 8/21/1977']
+# data = ['Jane Doe, 03/30/1956', 'Jim Davis, 4/15/1983', 'Mindy Watkins, 8/21/1977']
+
+data = []
 
 # Printing the data values, while making the heading bold using class color; also underlining using variables
 print(startBold + startGreen + startUnderline + "\nData:" + endColor, data)
 
-# Creating the table
-hash_table = [None] * 20
+hash = hashlib.sha256()
+new = hash.digest()
+print(new)
+print(hash.update(b'Jane Doe, 03/30/1956'))
+print(new)
+print(hash.update(b'Jim Davis, 4/15/1983'))
+print(new)
 
 # Printing the hash table, while using the termcolor library to make the heading blue and the python color class assigned
 # variables to make the heading bold
-print(startBold + startUnderline + colored("\nEmpty hash table:", "blue") + endColor, hash_table)
+print(startBold + startUnderline + colored("\nEmpty hash table:", "blue") + endColor, data)
+
+
 
 
 
