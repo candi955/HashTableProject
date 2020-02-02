@@ -2,7 +2,7 @@
 # Other reference for possible future ideas:
 # For checking integrity of the data and user-entries: https://www.pythoncentral.io/hashing-strings-with-python/
 import hashlib
-import pandas
+import pandas as pd
 
 class hashClass():
 
@@ -58,6 +58,11 @@ class hashClass():
         # ____________________________________________________________________
         # Attempting to create a dataframe to save the info
 
+        my_table_DataFrame = pd.DataFrame.from_dict(my_table, orient='index')
+        print(my_table_DataFrame)
+
+        # return
+
 hashClass()
 
 def main():
@@ -66,6 +71,17 @@ def main():
 
     # Calling the hashClass() function _updatedInfo_
     theHash._updatedInfo_()
+
+
+    tryAgain = input("Please enter 1 to make more entries, or 2 to exit: ")
+
+    if tryAgain == "1":
+        theHash._updatedInfo_()
+    if tryAgain == "2":
+        exit()
+    else:
+        exit()
+
 
 
 
