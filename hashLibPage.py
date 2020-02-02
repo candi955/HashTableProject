@@ -19,7 +19,8 @@
 # side note from reference:  uuid4() creates a random UUID.
 
 # importing 'hashlib' to create a hash table, and 'uuid' to salt the hash and prevent collision
-import hashlib, uuid
+import hashlib, _sha256, uuid
+
 
 # importing termcolor to color some of the text in the program
 # reference: https://www.programcreek.com/python/example/78943/termcolor.colored
@@ -39,7 +40,6 @@ startGreen = '\033[92m'
 startYellow = '\033[93m'
 startRed = '\033[91m'
 
-m = hashlib.sha256()
 # Creating the data values
 # data = ['Jane Doe, 03/30/1956', 'Jim Davis, 4/15/1983', 'Mindy Watkins, 8/21/1977']
 
@@ -48,17 +48,21 @@ data = []
 # Printing the data values, while making the heading bold using class color; also underlining using variables
 print(startBold + startGreen + startUnderline + "\nData:" + endColor, data)
 
-hash = hashlib.sha256()
-new = hash.digest()
-print(new)
-print(hash.update(b'Jane Doe, 03/30/1956'))
-print(new)
-print(hash.update(b'Jim Davis, 4/15/1983'))
-print(new)
-
 # Printing the hash table, while using the termcolor library to make the heading blue and the python color class assigned
 # variables to make the heading bold
 print(startBold + startUnderline + colored("\nEmpty hash table:", "blue") + endColor, data)
+
+hash_object = hashlib.sha256(b"Jane Doe")
+salt = uuid.uuid4().hex
+
+hashedString = hash_object.hexdigest()
+print("\nHashed string: ", hashedString)
+
+newhash = hashedString + salt
+print("\nHashed string concatenated with salt: ", newhash)
+
+
+
 
 
 
