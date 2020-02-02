@@ -77,12 +77,11 @@ print("\n---------------------Trying the Key Derivation method------------------
 dk = hashlib.pbkdf2_hmac('sha256', b'password', b'salt', 100000)
 print("\n", dk)
 
-
 # reference: https://www.journaldev.com/17357/python-hash-function
 # https://stackoverflow.com/questions/114830/is-a-python-dictionary-an-example-of-a-hash-table
 
 class hashClass():
-    def _employee_(self, lastName, firstName, empNum, dob):
+    def _init_(self, lastName, firstName, empNum, dob):
         self.lastName = lastName
         self.firstName = firstName
         self.empNum = empNum
@@ -94,6 +93,14 @@ class hashClass():
 
     def _hashAndSalt_(self):
         return dk((self.lastName, self.firstName, self.empNum, self.dob))
+
+hashClass()
+
+theHash = hashClass()
+
+def _main_(self):
+    my_table = {"my_key": (theHash._updatedInfo_(self.lastName), theHash._updatedInfo_(self.firstName),
+                           theHash._updatedInfo_(self.empNum), theHash._updatedInfo_(self.dob))}
 
 
 
