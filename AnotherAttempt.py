@@ -1,15 +1,22 @@
 # importing 'hashlib' to create a hash table, and 'uuid' to salt the hash and prevent collision
-import hashlib, _sha256, uuid, binascii
+# Other reference for possible future ideas:
+# For checking integrity of the data and user-entries: https://www.pythoncentral.io/hashing-strings-with-python/
+import hashlib
+import pandas
 
 class hashClass():
 
     # Creating the hashClass() constructor
+    # Received the idea from the following reference:
+    # https://www.journaldev.com/17357/python-hash-function
     def _init_(self, lastName, firstName, empNum, newDOB):
         self.lastName = lastName
         self.firstName = firstName
         self.empNum = empNum
         self.newDOB = newDOB
 
+    # Creating a function for the program user-inputs of employee information, and then to create the table
+    # and individual hash keys, added together for an ultimate individual key.
     def _updatedInfo_(self):
 
         # Creating variables for user-input of employee information into the system
@@ -26,12 +33,15 @@ class hashClass():
         y = self.empNum
         z = self.newDOB
 
+        # reference for creating hashes with salt for all of the individual user-inputs
+        # https: // python.readthedocs.io / en / latest / library / hashlib.html
         dk1 = hashlib.pbkdf2_hmac('sha256', b'w', b'salt', 100000)
         dk2 = hashlib.pbkdf2_hmac('sha256', b'x', b'salt', 100000)
         dk3 = hashlib.pbkdf2_hmac('sha256', b'y', b'salt', 100000)
         dk4 = hashlib.pbkdf2_hmac('sha256', b'z', b'salt', 100000)
 
-        # Using tuple to represent value of a key
+        # Creating a variable called k (for key), to add all of the hashes together to create an
+        # individual hashtable key and reference for all of the actual data
         k = dk1 + dk2 + dk3 + dk4
 
         # reference for tuple information:
@@ -43,7 +53,10 @@ class hashClass():
         for k in my_table:
             key = k
 
-        print(my_table)
+        print("\n", my_table)
+
+        # ____________________________________________________________________
+        # Attempting to create a dataframe to save the info
 
 hashClass()
 
@@ -54,4 +67,7 @@ def main():
     # Calling the hashClass() function _updatedInfo_
     theHash._updatedInfo_()
 
+
+
 main()
+
