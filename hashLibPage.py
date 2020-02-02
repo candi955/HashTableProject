@@ -19,7 +19,7 @@
 # side note from reference:  uuid4() creates a random UUID.
 
 # importing 'hashlib' to create a hash table, and 'uuid' to salt the hash and prevent collision
-import hashlib, _sha256, uuid
+import hashlib, _sha256, uuid, binascii
 
 
 # importing termcolor to color some of the text in the program
@@ -81,14 +81,20 @@ print("\n", dk)
 # https://stackoverflow.com/questions/114830/is-a-python-dictionary-an-example-of-a-hash-table
 
 class hashClass():
-    dk = hashlib.pbkdf2_hmac('sha256', b'password', b'salt', 100000)
+
     def _init_(self, lastName, firstName, empNum, dob):
         self.lastName = lastName
         self.firstName = firstName
         self.empNum = empNum
         self.dob = dob
 
-    def _updatedInfo_(self, updatedInfo):
+    def _updatedInfo_(self):
+
+        dk1 = hashlib.pbkdf2_hmac('sha256', b'w', b'salt', 100000)
+        dk2 = hashlib.pbkdf2_hmac('sha256', b'x', b'salt', 100000)
+        dk3 = hashlib.pbkdf2_hmac('sha256', b'y', b'salt', 100000)
+        dk4 = hashlib.pbkdf2_hmac('sha256', b'z', b'salt', 100000)
+
         self.lastName = input("\nPlease enter your last name: ")
 
         self.firstName = input("\nPlease enter your first name: ")
@@ -97,13 +103,16 @@ class hashClass():
 
         self.newDOB = input("\nPlease enter your date-of-birth(DD-MMM-YYYY: ")
 
-        print(self.lastName, self.firstName, self.empNum, self.newDOB)
+        w = self.lastname
+        x = self.firstName
+        y = self.empNum
+        z = self.newDOB
 
-        return self.lastName == updatedInfo.lastName and self.firstName == updatedInfo.firstName and\
-               self.empNum == updatedInfo.empNum and self.dob == updatedInfo.dob
+        my_table = {"my_key": (binascii.hexlify(dk1), binascii.hexlify(dk2),
+                               binascii.hexlify(dk3), binascii.hexlify(dk4))}
 
-    def _hashAndSalt_(self):
-        return dk((self.lastName, self.firstName, self.empNum, self.dob))
+        return my_table
+
 
 hashClass()
 
@@ -111,12 +120,10 @@ def _main_(self):
 
     theHash = hashClass()
 
-    my_table = {"my_key": (theHash._updatedInfo_(self.lastName), theHash._updatedInfo_(self.firstName),
-                           theHash._updatedInfo_(self.empNum), theHash._updatedInfo_(self.dob))}
 
     theHash.__init__()
     theHash._updatedInfo_()
-    theHash._hashAndSalt_()
+
 
 
 
