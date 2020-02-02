@@ -18,6 +18,22 @@
 # https://www.geeksforgeeks.org/applications-of-hashing/
 # side note from reference:  uuid4() creates a random UUID.
 
+# Examples to use for assigning color class variables:
+# Reference: https://stackoverflow.com/questions/8924173/how-do-i-print-bold-text-in-python
+# class color:
+   #PURPLE = '\033[95m'
+   #CYAN = '\033[96m'
+   #DARKCYAN = '\033[36m'
+   #DARKCYAN = '\033[36m'
+   #BLUE = '\033[94m'
+   #GREEN = '\033[92m'
+   #YELLOW = '\033[93m'
+   #RED = '\033[91m'
+   #BOLD = '\033[1m'
+   #UNDERLINE = '\033[4m'
+   #END = '\033[0m'
+# Ex: print(color.BOLD + 'Hello World !' + color.END)
+
 # importing 'hashlib' to create a hash table, and 'uuid' to salt the hash and prevent collision
 import hashlib, uuid
 
@@ -25,19 +41,26 @@ import hashlib, uuid
 # reference: https://www.programcreek.com/python/example/78943/termcolor.colored
 from termcolor import colored
 
-start = "\033[1m"
-end = "\033[0;0m"
+# Using the color class in python, in assigned variable form, to make the headings bold
+startBold = "\033[1m"
+endBold = "\033[0;0m"
 
+startUnderline = '\033[4m'
+endUnderline = "\033[0;0m"
+
+# Creating the data values
 data = ['Jane Doe, 03/30/1956', 'Jim Davis, 4/15/1983', 'Mindy Watkins, 8/21/1977']
 
+# Printing the data values, while making the heading bold using class color; also underlining using variables
+print(startBold, startUnderline, "\nData:\n", endBold, endUnderline, data)
 
-print(start, "\nData:\n", end, data)
-
+# Creating the table
 hash_table = [None] * 20
 
+# Printing the hash table, while using the termcolor library to make the heading blue and the python color class assigned
+# variables to make the heading bold
+print(startBold, colored("\nEmpty hash table:\n", "blue"), endBold, hash_table)
 
-print(colored("\nEmpty hash table:\n", "blue"))
-print(hash_table)
 
 
 
