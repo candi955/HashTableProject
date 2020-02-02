@@ -1,3 +1,11 @@
+# Practice page, with source code listed below
+
+# Source code for learning hashing from Algorithms for Dummies book, authors John Paul Mueller and Luca Massaron:
+# Source code reference from dummies.com:
+# https://www.dummies.com/store/product/Algorithms-For-Dummies.productCd-1119330491,navId-322493,descCd-DOWNLOAD.html
+
+
+
 #%% md
 
 # Hashing

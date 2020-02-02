@@ -1,18 +1,18 @@
+# Practice page with source code from geeksforgeeks.org, references below
+
 # reference: https://docs.python.org/3/library/hashlib.html
 # https://pypi.org/project/hashlib/
 # https://readthedocs.org/projects/hashlib/
 # https://circuitpython.readthedocs.io/projects/hashlib/en/latest/
 # https://github.com/adafruit/Adafruit_CircuitPython_hashlib
 # https://www.pythoncentral.io/hashing-strings-with-python/
-# Reference for uuid to add salt to hash to prevent collision:
-# https://stackoverflow.com/questions/9594125/salt-and-hash-a-password-in-python
 
 # Other references for hash tables in python:
 # https://www.geeksforgeeks.org/python-hash-method/'
 # https://www.geeksforgeeks.org/applications-of-hashing/
 
-# importing 'hashlib' to create a hash table, and 'uuid' to salt the hash and prevent collision
-import hashlib, uuid
+# importing 'hashlib' to create a hash table
+import hashlib
 
 
 m = hashlib.sha256()
