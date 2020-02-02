@@ -52,7 +52,14 @@ print(startBold + startGreen + startUnderline + "\nData:" + endColor, data)
 # variables to make the heading bold
 print(startBold + startUnderline + colored("\nEmpty hash table:", "blue") + endColor, data)
 
+# Ensuring the object (string) is hashed, before adding 'salt' to avoid collision
+# reference: https://www.pythoncentral.io/hashing-strings-with-python/
+# Side note: 'b' is buffer of bytes
 hash_object = hashlib.sha256(b"Jane Doe")
+
+# Adding 'salt' to the hash
+# references: https://stackoverflow.com/questions/9594125/salt-and-hash-a-password-in-python
+# https://docs.python.org/2/library/uuid.html
 salt = uuid.uuid4().hex
 
 hashedString = hash_object.hexdigest()
@@ -60,6 +67,15 @@ print("\nHashed string: ", hashedString)
 
 newhash = hashedString + salt
 print("\nHashed string concatenated with salt: ", newhash)
+
+print("\n---------------------Trying the Key Derivation method--------------------------------\n")
+# reference: https://python.readthedocs.io/en/latest/library/hashlib.html
+
+# Derived-Key (dk)
+# Password-based key derivation function 2
+# (hash_name, password, salt, iterations, dklen)  side note: at least 100,000 iterations of SHA-256 are suggested
+dk = hashlib.pbkdf2_hmac('sha256', b'string', b'salt', 100000)
+print(dk)
 
 
 
