@@ -3,6 +3,7 @@
 # For checking integrity of the data and user-entries: https://www.pythoncentral.io/hashing-strings-with-python/
 import hashlib
 import pandas as pd
+from openpyxl.workbook import Workbook
 
 class hashClass():
 
@@ -56,12 +57,23 @@ class hashClass():
         print("\n", my_table)
 
         # ____________________________________________________________________
-        # Attempting to create a dataframe to save the info
+        # Attempting to create a dataframe to save the info to a pandas dataframe
 
         my_table_DataFrame = pd.DataFrame.from_dict(my_table, orient='index')
+
+        # setting the dataframe to show the entire dataframe
+        pd.set_option('display.max_rows', 500)
+        pd.set_option('display.max_columns', 500)
+        pd.set_option('display.width', 1000)
+
+        # printing the dataframe
         print(my_table_DataFrame)
 
-        # return
+        #____________________________________________________
+        # Create, write to and save a workbook
+        # reference: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_excel.html
+
+        my_table_DataFrame.to_excel("MyEmployeeHashTable.xlsx", sheet_name='AllData', engine='xlsxwriter')
 
 hashClass()
 
