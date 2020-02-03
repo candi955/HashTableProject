@@ -4,6 +4,7 @@
 import hashlib
 import pandas as pd
 from openpyxl.workbook import Workbook
+from openpyxl import load_workbook
 
 class hashClass():
 
@@ -51,8 +52,6 @@ class hashClass():
 
         # reference (ideas for the below key assignment for variable k, the input hashes added all together):
         # https://stackoverflow.com/questions/40477899/create-dict-from-tuples-with-tuple-variable-names-as-keys-in-python
-        for k in my_table:
-            key = k
 
         print("\n", my_table)
 
@@ -73,7 +72,17 @@ class hashClass():
         # Create, write to and save a workbook
         # reference: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_excel.html
 
+        ### my_table_DataFrame.to_excel("MyEmployeeHashTable.xlsx", sheet_name='AllData', engine='xlsxwriter')
+
+        workbook = load_workbook(filename="MyEmployeeHashTable.xlsx")
+        workbook.save(filename="MyEmployeeHashTable.xlsx")
+
         my_table_DataFrame.to_excel("MyEmployeeHashTable.xlsx", sheet_name='AllData', engine='xlsxwriter')
+
+        # Save the spreadsheet
+        workbook = load_workbook(filename="MyEmployeeHashTable.xlsx")
+        workbook.save(filename="MyEmployeeHashTable.xlsx")
+
 
 hashClass()
 
