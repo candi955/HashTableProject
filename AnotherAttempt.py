@@ -5,6 +5,11 @@ import hashlib
 import pandas as pd
 from openpyxl.workbook import Workbook
 from openpyxl import load_workbook
+import xlrd
+import xlwt
+from xlutils.copy import copy
+import xlsxwriter
+
 
 class hashClass():
 
@@ -50,14 +55,10 @@ class hashClass():
         # https://www.quora.com/In-the-Python-dictionary-can-1-key-hold-more-than-1-value
         my_table = {k: (self.lastName, self.firstName, self.empNum, self.newDOB)}
 
-        # reference (ideas for the below key assignment for variable k, the input hashes added all together):
-        # https://stackoverflow.com/questions/40477899/create-dict-from-tuples-with-tuple-variable-names-as-keys-in-python
-
         print("\n", my_table)
 
         # ____________________________________________________________________
         # Attempting to create a dataframe to save the info to a pandas dataframe
-
         my_table_DataFrame = pd.DataFrame.from_dict(my_table, orient='index')
 
         # setting the dataframe to show the entire dataframe
@@ -74,14 +75,19 @@ class hashClass():
 
         ### my_table_DataFrame.to_excel("MyEmployeeHashTable.xlsx", sheet_name='AllData', engine='xlsxwriter')
 
-        workbook = load_workbook(filename="MyEmployeeHashTable.xlsx")
-        workbook.save(filename="MyEmployeeHashTable.xlsx")
+        # reference: https://www.youtube.com/watch?v=38XhSpmuXQw
 
-        my_table_DataFrame.to_excel("MyEmployeeHashTable.xlsx", sheet_name='AllData', engine='xlsxwriter')
+        writer = pd.ExcelWriter('MyEmployeeHashTable.xlsx', engine='openpyxl')
+        writer.book = load_workbook('MyEmployeeHashTable.xlsx')
+        writer.sheets = dict((ws.title, ws) for ws in writer.book.worksheets)
+        reader = pd.read_excel(r'MyEmployeeHashTable.xlsx')
+        my_table_DataFrame.to_excel(writer, index=True, header=False, startrow=len(reader)+1)
 
-        # Save the spreadsheet
-        workbook = load_workbook(filename="MyEmployeeHashTable.xlsx")
-        workbook.save(filename="MyEmployeeHashTable.xlsx")
+        writer.close()
+
+
+
+
 
 
 hashClass()
