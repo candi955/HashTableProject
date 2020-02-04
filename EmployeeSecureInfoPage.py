@@ -1,3 +1,9 @@
+# This page is meant to contribute to my final project for the course MS549 Data Structures and Testing
+# The program is an example of secure employee data entry using a Hash Table
+# The user enters the secure data upon program input prompts, the data is hashed (SHA-256 algorithm) with a salt added,
+# utilizing the python library hashlib, and then appended to an excel file.
+# The adding of salt contributes to the prevention of collision.
+
 # importing 'hashlib' to create a hash table, and 'uuid' to salt the hash and prevent collision
 # Other reference for possible future ideas:
 # For checking integrity of the data and user-entries: https://www.pythoncentral.io/hashing-strings-with-python/
