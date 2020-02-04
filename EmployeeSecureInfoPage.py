@@ -11,6 +11,14 @@
 import hashlib, binascii, uuid
 import pandas as pd
 from openpyxl import load_workbook
+import csv
+import xl2dict
+from xl2dict import XlToDict
+import xlrd
+import numpy
+
+import codecs
+
 
 
 
@@ -36,7 +44,8 @@ class hashClass():
         self.newDOB = input("\nPlease enter your date-of-birth(DDMMMYYYY: ")
 
         # Showing the user their input entries for the hash table values
-        print("Here are your entries: ", self.lastName, ", ", self.firstName, ", ", self.empNum, ", ", self.newDOB, "\n")
+        print("Please check your entries for accuracy, and take personal note of your secure key:\n",
+              self.lastName, ", ", self.firstName, ", ", self.empNum, ", ", self.newDOB, "\n")
 
         w = self.lastName
         x = self.firstName
@@ -51,21 +60,21 @@ class hashClass():
 
         salt = uuid.uuid4().hex
 
-        LastNameString = hashlib.sha256(w.encode('utf-8'))
-        LastNameHashed = LastNameString.hexdigest() + ':' + salt
+        ###LastNameString = hashlib.sha256(w.encode('utf-8'))
+        ###LastNameHashed = LastNameString.hexdigest() + ':' + salt
 
-        dkFirstName = hashlib.pbkdf2_hmac('sha256', b'x', b'salt', 100000)
-        dkFirstNameHex = binascii.hexlify(dkFirstName)
+        ###dkFirstName = hashlib.sha256(w.encode('utf-8'))
+        ###dkFirstNameHashed=dkFirstName.hexdigest() + ':' + salt
 
-        dkEmpNum = hashlib.pbkdf2_hmac('sha256', b'y', b'salt', 100000)
-        dkEmpNumHex = binascii.hexlify(dkEmpNum)
+        dkEmpNum = hashlib.sha256(w.encode('utf-8'))
+        dkEmpNumHashed = dkEmpNum.hexdigest() + ':' + salt
 
-        dkDOB = hashlib.pbkdf2_hmac('sha256', b'z', b'salt', 100000)
-        dkDOBHex = binascii.hexlify(dkDOB)
+        ###dkDOB = hashlib.sha256(w.encode('utf-8'))
+        ###dkDOBHashed = dkDOB.hexdigest() + ':' + salt
 
         # Creating a variable called k (for key), to add all of the hashes together to create an
         # individual hashtable key and reference for all of the actual data
-        k = LastNameHashed ##+ dkFirstNameHex + dkEmpNumHex + dkDOBHex
+        k = dkEmpNumHashed ###LastNameHashed + dkFirstNameHashed + dkEmpNumHashed + dkDOBHashed
 
         # reference for tuple information:
         # https://www.quora.com/In-the-Python-dictionary-can-1-key-hold-more-than-1-value
@@ -97,9 +106,57 @@ class hashClass():
 
         writer.close()
 
+    # Creating a function to retrieve the associated values with the correct key
+    def _getInfo(self):
+
+        # reference for Confidentiality message creation:
+        # https://www.mail-signatures.com/articles/email-disclaimer-examples/
+        retreiveInput = input("\nThe content of the data being accessed is confidential and intended for the employee\n" +
+              " referenced by the  specified key or legally signed employer and associated Human Resources\n" +
+              "departments, or otherwise legally entity with legal authority to access only.\n\n"
+              
+              "It is strictly forbidden to share any part of this secure data with\n" +
+              "any third party, without a written consent of the employee. If you retrieve this data\n" +
+              " by mistake, please notify the associated company Human Resources department immediately and\n" +
+              "follow with by deleting and discarding any personal records or holdings of the data in\n" +
+              "a secure manner, so that we can ensure such a mistake does not occur in the future.\n\n" +
+
+              "Please enter your assigned private key in order to retrieve personal employee data.\n\n" +
+              "Key: ")
+
+        # reference for retrieving dictionary from excel in python:
+        # https://pypi.org/project/xl2dict/
+        #myxlobject = XlToDict()
+        #correctKey = myxlobject.fetch_data_by_column_by_sheet_name(file_path="/Users/Hachidori/PycharmProjects/HashTableProject/MyEmployeeHashTable.xlsx",
+                                                      #sheet_name="Sheet1",
+                                                      #filter_variables_dict={"Unnamed": retreiveInput})
+        # references:
+        # https://pypi.org/project/xl2dict/
+        # https://stackoverflow.com/questions/22775561/search-column-return-row-from-excel-using-python
+        # https://stackoverflow.com/questions/12468179/unicodedecodeerror-utf8-codec-cant-decode-byte-0x9c
+        # https://stackoverflow.com/questions/7894856/line-contains-null-byte-in-csv-reader-python
 
 
+        data = {}
+        with codecs.open('MyEmployeeHashTable.xlsx', 'r', encoding='utf-8',
+                         errors='ignore') as fdata:
 
+            reader = csv.reader(fdata)
+            for line in reader:
+                data[line[0]] = line
+
+        infoToFind = retreiveInput
+
+        if infoToFind == retreiveInput:
+            print(data.get(infoToFind, 'Not found'))
+
+        if retreiveInput != infoToFind:
+            print("Hello")
+            print("There is no match for key within the Employee Secure Info System.\n")
+            return
+
+        else:
+            print("Error")
 
 
 hashClass()
@@ -108,20 +165,25 @@ def main():
     # Creating a variable to call the hashClass(), and using that to call the hashClass functions
     theHash = hashClass()
 
-    # Calling the hashClass() function _updatedInfo_
-    theHash._updatedInfo_()
-
-
-    tryAgain = input("Please enter 1 to make more entries, or 2 to exit: ")
+    tryAgain = input("\nPlease enter  on of the following choices:\n" +
+                     "1 to make an employee data entry into the Employee Secure Info Page\n" +
+                     "2 to retrieve secure data using the key\n" +
+                     "3 to exit the program " +
+                     "\n\nMake your entry here: ")
 
     if tryAgain == "1":
         theHash._updatedInfo_()
+
     if tryAgain == "2":
+        theHash._getInfo()
+
+    if tryAgain == "3":
+        print("\n----Exiting the Employee Secure Info Page----\n")
         exit()
+
     else:
-        exit()
-
-
+        print("\nPlease try again. Thank you.\n")
+        main()
 
 
 main()
