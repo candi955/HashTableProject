@@ -1,14 +1,11 @@
 # importing 'hashlib' to create a hash table, and 'uuid' to salt the hash and prevent collision
 # Other reference for possible future ideas:
 # For checking integrity of the data and user-entries: https://www.pythoncentral.io/hashing-strings-with-python/
-import hashlib
+# Hash compare online reference: http://onlinemd5.com/
+import hashlib, binascii
 import pandas as pd
-from openpyxl.workbook import Workbook
 from openpyxl import load_workbook
-import xlrd
-import xlwt
-from xlutils.copy import copy
-import xlsxwriter
+
 
 
 class hashClass():
@@ -42,14 +39,24 @@ class hashClass():
 
         # reference for creating hashes with salt for all of the individual user-inputs
         # https: // python.readthedocs.io / en / latest / library / hashlib.html
-        dk1 = hashlib.pbkdf2_hmac('sha256', b'w', b'salt', 100000)
-        dk2 = hashlib.pbkdf2_hmac('sha256', b'x', b'salt', 100000)
-        dk3 = hashlib.pbkdf2_hmac('sha256', b'y', b'salt', 100000)
-        dk4 = hashlib.pbkdf2_hmac('sha256', b'z', b'salt', 100000)
+        # reference for fixing error concerning hashing a variable (w, x, y, z):
+        # https://stackoverflow.com/questions/24905062/how-to-hash-a-variable-in-python
+
+        LastNameString = hashlib.sha256(w.encode('utf-8'))
+        LastNameHashed = LastNameString.hexdigest()
+
+        dkFirstName = hashlib.pbkdf2_hmac('sha256', b'x', b'salt', 100000)
+        dkFirstNameHex = binascii.hexlify(dkFirstName)
+
+        dkEmpNum = hashlib.pbkdf2_hmac('sha256', b'y', b'salt', 100000)
+        dkEmpNumHex = binascii.hexlify(dkEmpNum)
+
+        dkDOB = hashlib.pbkdf2_hmac('sha256', b'z', b'salt', 100000)
+        dkDOBHex = binascii.hexlify(dkDOB)
 
         # Creating a variable called k (for key), to add all of the hashes together to create an
         # individual hashtable key and reference for all of the actual data
-        k = dk1 + dk2 + dk3 + dk4
+        k = LastNameHashed ##+ dkFirstNameHex + dkEmpNumHex + dkDOBHex
 
         # reference for tuple information:
         # https://www.quora.com/In-the-Python-dictionary-can-1-key-hold-more-than-1-value
@@ -71,11 +78,7 @@ class hashClass():
 
         #____________________________________________________
         # Create, write to and save a workbook
-        # reference: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_excel.html
-
-        ### my_table_DataFrame.to_excel("MyEmployeeHashTable.xlsx", sheet_name='AllData', engine='xlsxwriter')
-
-        # reference: https://www.youtube.com/watch?v=38XhSpmuXQw
+        # https://medium.com/better-programming/using-python-pandas-with-excel-d5082102ca27
 
         writer = pd.ExcelWriter('MyEmployeeHashTable.xlsx', engine='openpyxl')
         writer.book = load_workbook('MyEmployeeHashTable.xlsx')
