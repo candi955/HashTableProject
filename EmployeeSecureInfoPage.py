@@ -15,7 +15,7 @@ import csv
 import xl2dict
 from xl2dict import XlToDict
 import xlrd
-import numpy
+import numpy as np
 
 import codecs
 
@@ -111,7 +111,7 @@ class hashClass():
 
         # reference for Confidentiality message creation:
         # https://www.mail-signatures.com/articles/email-disclaimer-examples/
-        retreiveInput = input("\nThe content of the data being accessed is confidential and intended for the employee\n" +
+        retrieveInput = input("\nThe content of the data being accessed is confidential and intended for the employee\n" +
               " referenced by the  specified key or legally signed employer and associated Human Resources\n" +
               "departments, or otherwise legally entity with legal authority to access only.\n\n"
               
@@ -136,28 +136,25 @@ class hashClass():
         # https://stackoverflow.com/questions/12468179/unicodedecodeerror-utf8-codec-cant-decode-byte-0x9c
         # https://stackoverflow.com/questions/7894856/line-contains-null-byte-in-csv-reader-python
 
+        MyDataframe = pd.read_excel('MyEmployeeHashTable.xlsx', sheet_name="Sheet1",
+                                        keep_default_na=False, na_values=[""])
 
-        data = {}
-        with codecs.open('MyEmployeeHashTable.xlsx', 'r', encoding='utf-8',
-                         errors='ignore') as fdata:
+        # references for dropna: https://stackoverflow.com/questions/53856763/get-row-and-column-in-pandas-for-a-cell-with-a-certain-value
+        # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html
+        # reference for iloc: https://www.shanelynn.ie/select-pandas-dataframe-rows-and-columns-using-iloc-loc-and-ix/
+        # https: // www.edureka.co / community / 43228 / pandas - iloc - printing - whole - row - instead - of - cell - value
 
-            reader = csv.reader(fdata)
-            for line in reader:
-                data[line[0]] = line
+        # Using the dropna() method in python to drop away other rows except for the retrieveInput variable (which is
+        # the user's entry of the key).
+        a = MyDataframe.where(MyDataframe==retrieveInput).dropna(how='all').dropna(axis=1)
+        # Getting the key index using the dropna() method assigned variable, and assigning this index the
+        # variable newIndex
+        newIndex = a.index
 
-        infoToFind = retreiveInput
-
-        if infoToFind == retreiveInput:
-            print(data.get(infoToFind, 'Not found'))
-
-        if retreiveInput != infoToFind:
-            print("Hello")
-            print("There is no match for key within the Employee Secure Info System.\n")
-            return
-
-        else:
-            print("Error")
-
+        # Now that the index has been located using the dropna() method, the iloc() method can be used
+        # to slice away all the other data except for the row in that index which was assigned the variable newIndex
+        keyRow = (MyDataframe.iloc[newIndex])
+        print('Printing the requested employee key and assigned data:\n',keyRow, "\n")
 
 hashClass()
 
