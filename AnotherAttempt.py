@@ -2,7 +2,7 @@
 # Other reference for possible future ideas:
 # For checking integrity of the data and user-entries: https://www.pythoncentral.io/hashing-strings-with-python/
 # Hash compare online reference: http://onlinemd5.com/
-import hashlib, binascii
+import hashlib, binascii, uuid
 import pandas as pd
 from openpyxl import load_workbook
 
@@ -41,9 +41,12 @@ class hashClass():
         # https: // python.readthedocs.io / en / latest / library / hashlib.html
         # reference for fixing error concerning hashing a variable (w, x, y, z):
         # https://stackoverflow.com/questions/24905062/how-to-hash-a-variable-in-python
+        # reference for adding salt to the hash: https://gist.github.com/markito/30a9bc2afbbfd684b31986c2de305d20
+
+        salt = uuid.uuid4().hex
 
         LastNameString = hashlib.sha256(w.encode('utf-8'))
-        LastNameHashed = LastNameString.hexdigest()
+        LastNameHashed = LastNameString.hexdigest() + ':' + salt
 
         dkFirstName = hashlib.pbkdf2_hmac('sha256', b'x', b'salt', 100000)
         dkFirstNameHex = binascii.hexlify(dkFirstName)
