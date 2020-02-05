@@ -22,10 +22,6 @@ import warnings
 with warnings.catch_warnings():
     warnings.simplefilter(action='ignore', category=FutureWarning)
 
-
-
-
-
 class hashClass():
 
     # Creating the hashClass() constructor
@@ -163,6 +159,7 @@ class hashClass():
             print("Error")
             return
 
+        # Creating user-input and using the pandas drop() method to allow deletion requests
         deleteRequ = input("For administrators only, do you wish to delete this input permanently from the\n" +
                            "record? Please type Yes, or No: ")
         if deleteRequ == "Yes":
@@ -188,9 +185,6 @@ class hashClass():
                 writer.close()
 
                 print("The file has been permanently deleted.")
-
-
-
 
             if doubleChecking == "No":
                 print("We will return you to the main menu.")
@@ -229,7 +223,6 @@ def main():
 
     else:
         main()
-
 
 main()
 
