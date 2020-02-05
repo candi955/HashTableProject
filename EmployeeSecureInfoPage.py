@@ -50,10 +50,11 @@ class hashClass():
         print("Please check your entries for accuracy, and take personal note of your secure key:\n",
               self.lastName, ", ", self.firstName, ", ", self.empNum, ", ", self.newDOB, "\n")
 
-        w = self.lastName
-        x = self.firstName
+        # Saving other hash:salt variables for employee information in case needed later to expand program
+        ### w = self.lastName
+        ### x = self.firstName
         y = self.empNum
-        z = self.newDOB
+        ### z = self.newDOB
 
         # reference for creating hashes with salt for all of the individual user-inputs
         # https: // python.readthedocs.io / en / latest / library / hashlib.html
@@ -64,7 +65,7 @@ class hashClass():
         salt = uuid.uuid4().hex
 
         # variables for hashing the employee number and adding salt (which will be used in the initially set-up program
-        dkEmpNum = hashlib.sha256(w.encode('utf-8'))
+        dkEmpNum = hashlib.sha256(y.encode('utf-8'))
         dkEmpNumHashed = dkEmpNum.hexdigest() + ':' + salt
         # Saved other variables for hashing employee information in case wished to use them within the program
         # on a later date
@@ -109,7 +110,6 @@ class hashClass():
         writer.sheets = dict((ws.title, ws) for ws in writer.book.worksheets)
         reader = pd.read_excel(r'MyEmployeeHashTable.xlsx')
         my_table_DataFrame.to_excel(writer, index=True, header=False, startrow=len(reader)+1)
-
         writer.close()
 
     # Creating a function to retrieve the associated values with the correct key
@@ -158,7 +158,6 @@ class hashClass():
             keyRow = (MyDataframe.iloc[newIndex])
             print('Printing the requested employee key and assigned data:\n', keyRow, "\n")
 
-
         else:
             print("Error")
             return
@@ -169,6 +168,22 @@ class hashClass():
             doubleChecking = input("Are you sure? Please type Yes, or No:")
             if doubleChecking == "Yes":
                 print("They want to do it")
+
+                import openpyxl
+
+                wb = openpyxl.load_workbook("MyEmployeeHashTable.xlsx")
+                ws = wb.active
+                for x in range(1, 100):
+                    newIndex = newIndex.groupby('group_id').filter(lambda group: group['criteria1'].max() != 0)
+                    newIndex = newIndex.groupby('group_id').apply(filter_group)
+                    ws.delete_rows(newIndex)
+
+                #reader = pd.read_excel(r'MyEmployeeHashTable.xlsx')
+                #my_table_DataFrame.to_excel(writer, index=True, header=False, startrow=len(reader) + 1)
+                #writer.close()
+
+
+
             if doubleChecking == "No":
                 print("We will return you to the main menu.")
                 return
