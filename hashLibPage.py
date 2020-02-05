@@ -70,7 +70,8 @@ print("\nHashed string: ", hashedString)
 newhash = hashedString + salt
 print("\nHashed string concatenated with salt: ", newhash)
 
-print("\n---------------------Trying the Key Derivation method--------------------------------\n")
+print(startRed, colored("\n---------------------Trying the Key Derivation method--------------------------------\n") +
+      endColor)
 # reference: https://python.readthedocs.io/en/latest/library/hashlib.html
 
 # Derived-Key (dk)
@@ -78,6 +79,8 @@ print("\n---------------------Trying the Key Derivation method------------------
 # (hash_name, password, salt, iterations, dklen)  side note: at least 100,000 iterations of SHA-256 are suggested
 dk = hashlib.pbkdf2_hmac('sha256', b'password', b'salt', 100000)
 print("\n", dk)
+
+print(startGreen, colored("\n---------------------Creating an SHA-256 Algorithm Hash With Salt--------------------------------\n") + endColor)
 
 # reference: https://www.journaldev.com/17357/python-hash-function
 # https://stackoverflow.com/questions/114830/is-a-python-dictionary-an-example-of-a-hash-table
@@ -105,8 +108,10 @@ for item in data:
     # updating
     print(updatedDataWithSalt)
 
-print("________________________________________________________________________________________________________________"
-      "__________________________________________________________________________________________")
+print(startPurple, colored("\n-----------------Creating Tables with the combined hash from items as a key " +
+                           "(with salt), SHA-256 Algorithm----------------------------\n") + endColor)
+
+print("\n___________Table 1___________\n")
 
 a = b'Smith'
 b = b'Andrew'
@@ -129,8 +134,7 @@ my_table = {k: (a, b, c)}
 
 print(my_table)
 
-print("________________________________________________________________________________________________________________"
-      "__________________________________________________________________________________________")
+print("\n___________Table 2___________\n")
 
 a = b'Casada'
 b = b'Marcus'
@@ -153,8 +157,7 @@ my_table2 = {k: (a, b, c)}
 
 print(my_table2)
 
-print("________________________________________________________________________________________________________________"
-      "__________________________________________________________________________________________")
+print("\n___________Table 3___________\n")
 
 a = b"O'Riley"
 b = b'Robert'
@@ -176,6 +179,8 @@ k = hashedSaltA + hashedSaltB + hashedSaltC
 my_table3 = {k: (a, b, c)}
 
 print(my_table3)
+
+print(startBlue, colored("\n___________The Hash Table Dataframe (with combined hashes as keys; SHA256, salt added___________\n") + endColor)
 
 tableHashedKeyDataFrame = pd.DataFrame({'Table 1': (my_table),
                                         'Table 2': (my_table2),
