@@ -151,7 +151,7 @@ k = hashedSaltA + hashedSaltB + hashedSaltC
 
 my_table2 = {k: (a, b, c)}
 
-print(my_table)
+print(my_table2)
 
 print("________________________________________________________________________________________________________________"
       "__________________________________________________________________________________________")
@@ -175,7 +175,18 @@ k = hashedSaltA + hashedSaltB + hashedSaltC
 
 my_table3 = {k: (a, b, c)}
 
-print(my_table)
+print(my_table3)
+
+tableHashedKeyDataFrame = pd.DataFrame({'Table 1': (my_table),
+                                        'Table 2': (my_table2),
+                                        'Table 3': (my_table3)})
+
+
+pd.set_option('display.max_rows', 1000)
+pd.set_option('display.max_columns', 1000)
+pd.set_option('display.width', 1000)
+
+print(tableHashedKeyDataFrame)
 
 
 
