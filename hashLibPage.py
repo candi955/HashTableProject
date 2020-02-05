@@ -65,10 +65,10 @@ hash_object = hashlib.sha256(b"Jane Doe")
 salt = uuid.uuid4().hex
 
 hashedString = hash_object.hexdigest()
-print("\nHashed string: ", hashedString)
+print(startCyan, startBold, startUnderline + colored("\nHashed string:") + endColor, hashedString)
 
 newhash = hashedString + salt
-print("\nHashed string concatenated with salt: ", newhash)
+print(startPurple, startBold, startUnderline + colored("\nHashed string concatenated with salt:") + endColor, newhash)
 
 print(startRed, colored("\n---------------------Trying the Key Derivation method--------------------------------\n") +
       endColor)
