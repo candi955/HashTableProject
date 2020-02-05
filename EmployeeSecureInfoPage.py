@@ -176,12 +176,15 @@ class hashClass():
                     data = np.array([[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)])
 
                 # Creating a variable for data to be transformed into excel file format for writing on file
+                # references utilized:
+                # https://www.shanelynn.ie/using-pandas-dataframe-creating-editing-viewing-data-in-python/
+                # https://stackoverflow.com/questions/44931834/pandas-drop-function-error-label-not-contained-in-axis
                 writer = pd.ExcelWriter(book)
                 writer.book = load_workbook('MyEmployeeHashTable.xlsx')
                 writer.sheets = dict((ws.title, ws) for ws in writer.book.worksheets)
                 reader = pd.read_excel(r'MyEmployeeHashTable.xlsx', index_col=0)
                 reader.drop(retrieveInput, axis=0, inplace=True)
-                reader.to_excel('MyEmployeeHashTable.xlsx', index=True, header=False, startrow=len(reader) + 1)
+                reader.to_excel('MyEmployeeHashTable.xlsx') ##, index=True, header=False, startrow=len(reader)-1)
                 writer.close()
 
                 print("The file has been permanently deleted.")
