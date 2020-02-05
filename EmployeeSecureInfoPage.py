@@ -198,9 +198,9 @@ class hashClass():
         else:
             return
 
-
 hashClass()
 
+# Creating a function to call the functions from the hashClass()
 def main():
     # Creating a variable to call the hashClass(), and using that to call the hashClass functions
     theHash = hashClass()
@@ -220,7 +220,6 @@ def main():
     if tryAgain == "3":
         print("\n----Exiting the Employee Secure Info Page----\n")
         exit()
-
     else:
         main()
 
