@@ -11,6 +11,7 @@
 import hashlib, uuid
 import pandas as pd
 from openpyxl import load_workbook
+import numpy as np
 
 # To get rid of future warnings, specifically from hashClass(), function _getInfo_():
 # FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
@@ -141,19 +142,45 @@ class hashClass():
 
         # Using the dropna() method in python to drop away other rows except for the retrieveInput variable (which is
         # the user's entry of the key).
-        a = MyDataframe.where(MyDataframe==retrieveInput).dropna(how='all').dropna(axis=1)
-        # Getting the key index using the dropna() method assigned variable, and assigning this index the
-        # variable newIndex
-        newIndex = a.index
+        a = MyDataframe.where(MyDataframe == retrieveInput).dropna(how='all').dropna(axis=1)
 
-        # Now that the index has been located using the dropna() method, the iloc() method can be used
-        # to slice away all the other data except for the row in that index which was assigned the variable newIndex
-        # reference for using pandas (pd) options for making the table look nice when printed:
-        # https://towardsdatascience.com/pretty-displaying-tricks-for-columnar-data-in-python-2fe3b3ed9b83
-        pd.options.display.max_columns = None
-        pd.options.display.width = None
-        keyRow = (MyDataframe.iloc[newIndex])
-        print('Printing the requested employee key and assigned data:\n', keyRow, "\n")
+        if a is not None:
+            # Getting the key index using the dropna() method assigned variable, and assigning this index the
+            # variable newIndex
+            newIndex = a.index
+
+            # Now that the index has been located using the dropna() method, the iloc() method can be used
+            # to slice away all the other data except for the row in that index which was assigned the variable newIndex
+            # reference for using pandas (pd) options for making the table look nice when printed:
+            # https://towardsdatascience.com/pretty-displaying-tricks-for-columnar-data-in-python-2fe3b3ed9b83
+            pd.options.display.max_columns = None
+            pd.options.display.width = None
+            keyRow = (MyDataframe.iloc[newIndex])
+            print('Printing the requested employee key and assigned data:\n', keyRow, "\n")
+
+
+        else:
+            print("Error")
+            return
+
+        deleteRequ = input("For administrators only, do you wish to delete this input permanently from the\n" +
+                           "record? Please type Yes, or No: ")
+        if deleteRequ == "Yes":
+            doubleChecking = input("Are you sure? Please type Yes, or No:")
+            if doubleChecking == "Yes":
+                print("They want to do it")
+            if doubleChecking == "No":
+                print("We will return you to the main menu.")
+                return
+            else:
+                return
+        if deleteRequ == "No":
+            print("We will return you to the main menu.")
+            return
+
+        else:
+            return
+
 
 hashClass()
 
