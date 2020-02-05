@@ -20,6 +20,8 @@
 
 # importing 'hashlib' to create a hash table, and 'uuid' to salt the hash and prevent collision
 import hashlib, _sha256, uuid, binascii
+import pandas as pd
+import xlrd
 
 
 # importing termcolor to color some of the text in the program
@@ -79,50 +81,107 @@ print("\n", dk)
 
 # reference: https://www.journaldev.com/17357/python-hash-function
 # https://stackoverflow.com/questions/114830/is-a-python-dictionary-an-example-of-a-hash-table
+# reference for creating hashes with salt for all of the individual user-inputs
+# reference for fixing error concerning hashing a variable (w, x, y, z):
+# https://stackoverflow.com/questions/24905062/how-to-hash-a-variable-in-python
 
-class hashClass():
+# main reference: https: // python.readthedocs.io / en / latest / library / hashlib.html
+data = []
+print("Empty data table: ", data, "\n")
 
-    def _init_(self, lastName, firstName, empNum, dob):
-        self.lastName = lastName
-        self.firstName = firstName
-        self.empNum = empNum
-        self.dob = dob
+data= [b'Apples', b'Grapes ', b'oranges']
+print("Data with Apples, Grapes, and Oranges added: ", data, "\n")
 
-    def _updatedInfo_(self):
+# reference for adding salt to the hash: https://gist.github.com/markito/30a9bc2afbbfd684b31986c2de305d20
+salt = uuid.uuid4().hex
 
-        dk1 = hashlib.pbkdf2_hmac('sha256', b'w', b'salt', 100000)
-        dk2 = hashlib.pbkdf2_hmac('sha256', b'x', b'salt', 100000)
-        dk3 = hashlib.pbkdf2_hmac('sha256', b'y', b'salt', 100000)
-        dk4 = hashlib.pbkdf2_hmac('sha256', b'z', b'salt', 100000)
-
-        self.lastName = input("\nPlease enter your last name: ")
-
-        self.firstName = input("\nPlease enter your first name: ")
-
-        self.empNum = input("\nPlease enter your employee number: ")
-
-        self.newDOB = input("\nPlease enter your date-of-birth(DD-MMM-YYYY: ")
-
-        w = self.lastname
-        x = self.firstName
-        y = self.empNum
-        z = self.newDOB
-
-        my_table = {"my_key": (binascii.hexlify(dk1), binascii.hexlify(dk2),
-                               binascii.hexlify(dk3), binascii.hexlify(dk4))}
-
-        return my_table
+# variables for hashing the employee number and adding salt (which will be used in the initially set-up program
 
 
-hashClass()
+for item in data:
+    addingHash = hashlib.sha256(bytes(item))
+    updatedData = addingHash.hexdigest()
+    updatedDataWithSalt = updatedData + ":" + salt
+    # updating
+    print(updatedDataWithSalt)
 
-def _main_(self):
+print("________________________________________________________________________________________________________________"
+      "__________________________________________________________________________________________")
 
-    theHash = hashClass()
+a = b'Smith'
+b = b'Andrew'
+c = b'Soccor'
+salt = uuid.uuid4().hex
+
+# variables for hashing the employee number and adding salt (which will be used in the initially set-up program
+hashedA= hashlib.sha256(a)
+hashedSaltA = hashedA.hexdigest() + ':' + salt
+
+hashedB = hashlib.sha256(b)
+hashedSaltB = hashedB.hexdigest() + ':' + salt
+
+hashedC = hashlib.sha256(c)
+hashedSaltC = hashedC.hexdigest() + ':' + salt
+
+k = hashedSaltA + hashedSaltB + hashedSaltC
+
+my_table = {k: (a, b, c)}
+
+print(my_table)
+
+print("________________________________________________________________________________________________________________"
+      "__________________________________________________________________________________________")
+
+a = b'Casada'
+b = b'Marcus'
+c = b'Footbal'
+salt = uuid.uuid4().hex
+
+# variables for hashing the employee number and adding salt (which will be used in the initially set-up program
+hashedA= hashlib.sha256(a)
+hashedSaltA = hashedA.hexdigest() + ':' + salt
+
+hashedB = hashlib.sha256(b)
+hashedSaltB = hashedB.hexdigest() + ':' + salt
+
+hashedC = hashlib.sha256(c)
+hashedSaltC = hashedC.hexdigest() + ':' + salt
+
+k = hashedSaltA + hashedSaltB + hashedSaltC
+
+my_table2 = {k: (a, b, c)}
+
+print(my_table)
+
+print("________________________________________________________________________________________________________________"
+      "__________________________________________________________________________________________")
+
+a = b"O'Riley"
+b = b'Robert'
+c = b'Tennis'
+salt = uuid.uuid4().hex
+
+# variables for hashing the employee number and adding salt (which will be used in the initially set-up program
+hashedA= hashlib.sha256(a)
+hashedSaltA = hashedA.hexdigest() + ':' + salt
+
+hashedB = hashlib.sha256(b)
+hashedSaltB = hashedB.hexdigest() + ':' + salt
+
+hashedC = hashlib.sha256(c)
+hashedSaltC = hashedC.hexdigest() + ':' + salt
+
+k = hashedSaltA + hashedSaltB + hashedSaltC
+
+my_table3 = {k: (a, b, c)}
+
+print(my_table)
 
 
-    theHash.__init__()
-    theHash._updatedInfo_()
+
+
+
+
 
 
 
