@@ -12,6 +12,7 @@ import hashlib, uuid
 import pandas as pd
 from openpyxl import load_workbook
 import numpy as np
+import xlrd
 
 # To get rid of future warnings, specifically from hashClass(), function _getInfo_():
 # FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
@@ -167,20 +168,24 @@ class hashClass():
         if deleteRequ == "Yes":
             doubleChecking = input("Are you sure? Please type Yes, or No:")
             if doubleChecking == "Yes":
-                print("They want to do it")
 
-                import openpyxl
+                # Creating a variable for data being pulled from the MyEmployeeHashTable.xlsx file and placed into array format
+                book = xlrd.open_workbook('MyEmployeeHashTable.xlsx')
+                sheets = book.sheets()
+                for sheet in sheets:
+                    data = np.array([[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)])
 
-                wb = openpyxl.load_workbook("MyEmployeeHashTable.xlsx")
-                ws = wb.active
-                for x in range(1, 100):
-                    newIndex = newIndex.groupby('group_id').filter(lambda group: group['criteria1'].max() != 0)
-                    newIndex = newIndex.groupby('group_id').apply(filter_group)
-                    ws.delete_rows(newIndex)
+                # Creating a variable for data to be transformed into excel file format for writing on file
+                writer = pd.ExcelWriter(book)
+                writer.book = load_workbook('MyEmployeeHashTable.xlsx')
+                writer.sheets = dict((ws.title, ws) for ws in writer.book.worksheets)
+                reader = pd.read_excel(r'MyEmployeeHashTable.xlsx', index_col=0)
+                reader.drop(retrieveInput, axis=0, inplace=True)
+                reader.to_excel('MyEmployeeHashTable.xlsx', index=True, header=False, startrow=len(reader) + 1)
+                writer.close()
 
-                #reader = pd.read_excel(r'MyEmployeeHashTable.xlsx')
-                #my_table_DataFrame.to_excel(writer, index=True, header=False, startrow=len(reader) + 1)
-                #writer.close()
+                print("The file has been permanently deleted.")
+
 
 
 
