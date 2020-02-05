@@ -8,16 +8,18 @@
 # Other reference for possible future ideas:
 # For checking integrity of the data and user-entries: https://www.pythoncentral.io/hashing-strings-with-python/
 # Hash compare online reference: http://onlinemd5.com/
-import hashlib, binascii, uuid
+import hashlib, uuid
 import pandas as pd
 from openpyxl import load_workbook
-import csv
-import xl2dict
-from xl2dict import XlToDict
-import xlrd
-import numpy as np
 
-import codecs
+# To get rid of future warnings, specifically from hashClass(), function _getInfo_():
+# FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+# res_values = method(rvalues)
+# reference:  https://stackoverflow.com/questions/40659212/futurewarning-elementwise-comparison-failed-returning-scalar-but-in-the-futur
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter(action='ignore', category=FutureWarning)
+
 
 
 
@@ -56,19 +58,22 @@ class hashClass():
         # https: // python.readthedocs.io / en / latest / library / hashlib.html
         # reference for fixing error concerning hashing a variable (w, x, y, z):
         # https://stackoverflow.com/questions/24905062/how-to-hash-a-variable-in-python
-        # reference for adding salt to the hash: https://gist.github.com/markito/30a9bc2afbbfd684b31986c2de305d20
 
+        # reference for adding salt to the hash: https://gist.github.com/markito/30a9bc2afbbfd684b31986c2de305d20
         salt = uuid.uuid4().hex
 
-        ###LastNameString = hashlib.sha256(w.encode('utf-8'))
-        ###LastNameHashed = LastNameString.hexdigest() + ':' + salt
-
-        ###dkFirstName = hashlib.sha256(w.encode('utf-8'))
-        ###dkFirstNameHashed=dkFirstName.hexdigest() + ':' + salt
-
+        # variables for hashing the employee number and adding salt (which will be used in the initially set-up program
         dkEmpNum = hashlib.sha256(w.encode('utf-8'))
         dkEmpNumHashed = dkEmpNum.hexdigest() + ':' + salt
-
+        # Saved other variables for hashing employee information in case wished to use them within the program
+        # on a later date
+        # variables for hashing the Last Name and adding salt
+        ###LastNameString = hashlib.sha256(w.encode('utf-8'))
+        ###LastNameHashed = LastNameString.hexdigest() + ':' + salt
+        # variables for hashing the First Name and adding salt
+        ###dkFirstName = hashlib.sha256(w.encode('utf-8'))
+        ###dkFirstNameHashed=dkFirstName.hexdigest() + ':' + salt
+        # variables for hashing the employee DOB and adding salt
         ###dkDOB = hashlib.sha256(w.encode('utf-8'))
         ###dkDOBHashed = dkDOB.hexdigest() + ':' + salt
 
@@ -107,7 +112,7 @@ class hashClass():
         writer.close()
 
     # Creating a function to retrieve the associated values with the correct key
-    def _getInfo(self):
+    def _getInfo_(self):
 
         # reference for Confidentiality message creation:
         # https://www.mail-signatures.com/articles/email-disclaimer-examples/
@@ -124,24 +129,14 @@ class hashClass():
               "Please enter your assigned private key in order to retrieve personal employee data.\n\n" +
               "Key: ")
 
-        # reference for retrieving dictionary from excel in python:
-        # https://pypi.org/project/xl2dict/
-        #myxlobject = XlToDict()
-        #correctKey = myxlobject.fetch_data_by_column_by_sheet_name(file_path="/Users/Hachidori/PycharmProjects/HashTableProject/MyEmployeeHashTable.xlsx",
-                                                      #sheet_name="Sheet1",
-                                                      #filter_variables_dict={"Unnamed": retreiveInput})
-        # references:
-        # https://pypi.org/project/xl2dict/
-        # https://stackoverflow.com/questions/22775561/search-column-return-row-from-excel-using-python
-        # https://stackoverflow.com/questions/12468179/unicodedecodeerror-utf8-codec-cant-decode-byte-0x9c
-        # https://stackoverflow.com/questions/7894856/line-contains-null-byte-in-csv-reader-python
-
         MyDataframe = pd.read_excel('MyEmployeeHashTable.xlsx', sheet_name="Sheet1",
                                         keep_default_na=False, na_values=[""])
 
-        # references for dropna: https://stackoverflow.com/questions/53856763/get-row-and-column-in-pandas-for-a-cell-with-a-certain-value
+        # references for dropna:
+        # https://stackoverflow.com/questions/53856763/get-row-and-column-in-pandas-for-a-cell-with-a-certain-value
         # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html
-        # reference for iloc: https://www.shanelynn.ie/select-pandas-dataframe-rows-and-columns-using-iloc-loc-and-ix/
+        # reference for iloc:
+        # https://www.shanelynn.ie/select-pandas-dataframe-rows-and-columns-using-iloc-loc-and-ix/
         # https: // www.edureka.co / community / 43228 / pandas - iloc - printing - whole - row - instead - of - cell - value
 
         # Using the dropna() method in python to drop away other rows except for the retrieveInput variable (which is
@@ -153,8 +148,12 @@ class hashClass():
 
         # Now that the index has been located using the dropna() method, the iloc() method can be used
         # to slice away all the other data except for the row in that index which was assigned the variable newIndex
+        # reference for using pandas (pd) options for making the table look nice when printed:
+        # https://towardsdatascience.com/pretty-displaying-tricks-for-columnar-data-in-python-2fe3b3ed9b83
+        pd.options.display.max_columns = None
+        pd.options.display.width = None
         keyRow = (MyDataframe.iloc[newIndex])
-        print('Printing the requested employee key and assigned data:\n',keyRow, "\n")
+        print('Printing the requested employee key and assigned data:\n', keyRow, "\n")
 
 hashClass()
 
@@ -172,14 +171,13 @@ def main():
         theHash._updatedInfo_()
 
     if tryAgain == "2":
-        theHash._getInfo()
+        theHash._getInfo_()
 
     if tryAgain == "3":
         print("\n----Exiting the Employee Secure Info Page----\n")
         exit()
 
     else:
-        print("\nPlease try again. Thank you.\n")
         main()
 
 
