@@ -138,7 +138,7 @@ print("\n___________Table 2___________\n")
 
 a = b'Casada'
 b = b'Marcus'
-c = b'Footbal'
+c = b'Football'
 salt = uuid.uuid4().hex
 
 # variables for hashing the employee number and adding salt (which will be used in the initially set-up program
