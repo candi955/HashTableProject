@@ -50,7 +50,7 @@ class Hashing:
     def newNum(self):
 
         rand100 = random.sample(range(1, 101), 1)
-        
+
         randomUpdateNum = random.sample(range(1, 255), 5)
         randomUpdateNumBytes = bytes(randomUpdateNum)
 
@@ -68,11 +68,8 @@ class Hashing:
             itemHashed = h.hexdigest()
             itemHashed_and_Salted = itemHashed + ":" + salt
 
-            # Another way to add the hash is shown below:
-            # reference for using hmac library: https://stackoverflow.com/questions/43559332/python-3-hash-hmac-sha512
-            #sign = hmac.new(item, dataRandomBytes, hashlib.sha256).hexdigest()
-
             print("\nAdding a hash to the 100 dataset numbers:\n", itemHashed_and_Salted)
+
             k = itemHashed_and_Salted
             my_hash_table = {k: dataRandom}
 
@@ -98,8 +95,7 @@ class Hashing:
         print("\n100 values have been added.\n")
 
     def _getInfo_(self):
-        # reference for Confidentiality message creation:
-        # https://www.mail-signatures.com/articles/email-disclaimer-examples/
+
         retrieveInput = input("Please enter your assigned private key in order to retrieve personal employee data.\n\n" +
                               "Key: ")
 
