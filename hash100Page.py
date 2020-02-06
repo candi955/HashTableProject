@@ -88,8 +88,9 @@ class Hashing:
 
         # The hashes were all showing up as same hash and salt, so created the function and now calling the function 100 times
         # reference: https://stackoverflow.com/questions/4264634/more-pythonic-way-to-run-a-process-x-times
-        # the range (99) is for 0 - 99, which would be 100 numbers
-        for item in range(99):
+        # the range (100) at the current setup within this python version and IDE, is creating 100 hashes
+        # within the newNum() function and newNumPrint() function for loops.
+        for item in range(100):
             h.newNum()
 
         print("\n100 values have been added.\n")
