@@ -175,7 +175,7 @@ class Hashing:
         MyDataframe = pd.read_excel('MyHashTable.xlsx', sheet_name="Sheet1",
                                     keep_default_na=False, na_values=[""])
 
-        delete100Rows = (MyDataframe.iloc[0:101, 0:5])
+        ###delete100Rows = (MyDataframe.iloc[:, 0: 100])
         # Creating user-input and using the pandas drop() method to allow deletion requests
         deleteRequ = input("Do you wish to delete this input permanently from this entire dataframe?" +
                            "\nPlease type Yes, or No: ")
@@ -197,16 +197,21 @@ class Hashing:
                 writer.book = load_workbook('MyHashTable.xlsx')
                 writer.sheets = dict((ws.title, ws) for ws in writer.book.worksheets)
                 reader = pd.read_excel(r'MyHashTable.xlsx', index_col=0)
+                if reader.empty == False:
 
-                reader.drop(delete100Rows, axis=0, inplace=True)
+                    reader = pd.DataFrame([])
 
-                reader.to_excel('MyHashTable.xlsx')  ##, index=True, header=False, startrow=len(reader)-1)
-                writer.close()
+                    reader.to_excel('MyHashTable.xlsx')  ##, index=True, header=False, startrow=len(reader)-1)
+                    writer.close()
 
-                print("The file has been permanently deleted.")
+                    print("\nThe file has been permanently deleted.\n")
+                    main()
+                else:
+                    print("\nThis file is empty\n")
+                    main()
 
             if doubleChecking == "No":
-                print("We will return you to the main menu.")
+                print("\nWe will return you to the main menu.\n")
                 return
             else:
                 return
