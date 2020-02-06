@@ -133,9 +133,9 @@ class Hashing:
             return
 
         # Creating user-input and using the pandas drop() method to allow deletion requests
-        deleteRequ = input("Do you wish to delete this input permanently from the record?\nPlease type Yes, or No: ")
+        deleteRequ = input("\nDo you wish to delete this input permanently from the record?\nPlease type Yes, or No: ")
         if deleteRequ == "Yes":
-            doubleChecking = input("Are you sure? Please type Yes, or No:")
+            doubleChecking = input("\nAre you sure? Please type Yes, or No:")
             if doubleChecking == "Yes":
 
                 # Creating a variable for data being pulled from the MyEmployeeHashTable.xlsx file and placed into array format
@@ -156,10 +156,10 @@ class Hashing:
                 reader.to_excel('MyHashTable.xlsx')  ##, index=True, header=False, startrow=len(reader)-1)
                 writer.close()
 
-                print("The file has been permanently deleted.")
+                print("\nThe file has been permanently deleted.\n")
 
             if doubleChecking == "No":
-                print("We will return you to the main menu.")
+                print("\nWe will return you to the main menu.\n")
                 return
             else:
                 return
@@ -175,7 +175,6 @@ class Hashing:
         MyDataframe = pd.read_excel('MyHashTable.xlsx', sheet_name="Sheet1",
                                     keep_default_na=False, na_values=[""])
 
-        ###delete100Rows = (MyDataframe.iloc[:, 0: 100])
         # Creating user-input and using the pandas drop() method to allow deletion requests
         deleteRequ = input("Do you wish to delete this input permanently from this entire dataframe?" +
                            "\nPlease type Yes, or No: ")
@@ -207,7 +206,7 @@ class Hashing:
                     print("\nThe file has been permanently deleted.\n")
                     main()
                 else:
-                    print("\nThis file is empty\n")
+                    print("\nThis file was empty. Nothing was deleted.\n")
                     main()
 
             if doubleChecking == "No":
