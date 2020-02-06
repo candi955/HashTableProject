@@ -46,24 +46,22 @@ dataEmpty = bytes([])
 print("\nEmpty dataset:", dataEmpty)
 
 class Hashing:
-    def __init__(self):
-        #self.itemHashed = None
-        pass
 
     def newNum(self):
 
         rand100 = random.sample(range(1, 101), 1)
+        
         randomUpdateNum = random.sample(range(1, 255), 5)
         randomUpdateNumBytes = bytes(randomUpdateNum)
 
         dataRandom = np.append(dataEmpty, [rand100])
         print("\nPlacing 100 random numbers into the dataset:\n", dataRandom)
-        dataRandomBytes = bytearray(dataRandom)
 
+        dataRandomBytes = bytearray(dataRandom)
         salt = uuid.uuid4().hex
 
         for item in dataRandomBytes:
-            hash = hashlib.sha256()
+
             item1 = bytes(item)
             h = hashlib.new('sha256', item1)
             h.update(randomUpdateNumBytes)
