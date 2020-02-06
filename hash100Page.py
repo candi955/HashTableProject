@@ -1,5 +1,6 @@
 # A program to fulfill the project requirements for Hash Table in class MS549: timing the duration
 # of 100 random hash table entries, deletions, and removals
+# Initially, a menu shows (menu() function at bottom of program) to offer the user choices
 
 # In this project I not only practice hash tables, but also the use of color within my output, using both class color
 # variable assignment, and the library 'termcolor'.
@@ -20,18 +21,13 @@
 # side note from reference:  uuid4() creates a random UUID.
 
 # importing 'hashlib' to create a hash table, and 'uuid' to salt the hash and prevent collision
-import hashlib, _sha256, uuid, binascii
-import pandas as pd
-import numpy as np
-import random
-import xlrd
-import hmac
 import hashlib, uuid
 import pandas as pd
 from openpyxl import load_workbook
 import numpy as np
 import xlrd
-import sys
+import random
+
 
 
 # To get rid of future warnings, specifically from hashClass(), function _getInfo_():
@@ -200,7 +196,7 @@ class Hashing:
 
                     reader = pd.DataFrame([])
 
-                    reader.to_excel('MyHashTable.xlsx')  ##, index=True, header=False, startrow=len(reader)-1)
+                    reader.to_excel('MyHashTable.xlsx')
                     writer.close()
 
                     print("\nThe file has been permanently deleted.\n")
