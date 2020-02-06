@@ -169,6 +169,54 @@ class Hashing:
 
         else:
             return
+
+    def _deletingAll_(self):
+
+        MyDataframe = pd.read_excel('MyHashTable.xlsx', sheet_name="Sheet1",
+                                    keep_default_na=False, na_values=[""])
+
+        delete100Rows = (MyDataframe.iloc[0:101, 0:5])
+        # Creating user-input and using the pandas drop() method to allow deletion requests
+        deleteRequ = input("Do you wish to delete this input permanently from this entire dataframe?" +
+                           "\nPlease type Yes, or No: ")
+        if deleteRequ == "Yes":
+            doubleChecking = input("Are you sure? Please type Yes, or No:")
+            if doubleChecking == "Yes":
+
+                # Creating a variable for data being pulled from the MyEmployeeHashTable.xlsx file and placed into array format
+                book = xlrd.open_workbook('MyHashTable.xlsx')
+                sheets = book.sheets()
+                for sheet in sheets:
+                    data = np.array([[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)])
+
+                # Creating a variable for data to be transformed into excel file format for writing on file
+                # references utilized:
+                # https://www.shanelynn.ie/using-pandas-dataframe-creating-editing-viewing-data-in-python/
+                # https://stackoverflow.com/questions/44931834/pandas-drop-function-error-label-not-contained-in-axis
+                writer = pd.ExcelWriter(book)
+                writer.book = load_workbook('MyHashTable.xlsx')
+                writer.sheets = dict((ws.title, ws) for ws in writer.book.worksheets)
+                reader = pd.read_excel(r'MyHashTable.xlsx', index_col=0)
+
+                reader.drop(delete100Rows, axis=0, inplace=True)
+
+                reader.to_excel('MyHashTable.xlsx')  ##, index=True, header=False, startrow=len(reader)-1)
+                writer.close()
+
+                print("The file has been permanently deleted.")
+
+            if doubleChecking == "No":
+                print("We will return you to the main menu.")
+                return
+            else:
+                return
+        if deleteRequ == "No":
+            print("We will return you to the main menu.")
+            return
+
+        else:
+            return
+
 Hashing()
 
 def main():
@@ -184,9 +232,14 @@ def main():
 
     if asking == '1':
         hasher.newNumPrint()
-
     if asking == '2':
         hasher._getInfo_()
+    if asking == '3':
+        hasher._deletingAll_()
+    if asking == '4':
+        print("\n----Exiting the program----\n")
+    else:
+        main()
 
 main()
 
