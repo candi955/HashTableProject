@@ -27,8 +27,7 @@ from openpyxl import load_workbook
 import numpy as np
 import xlrd
 import random
-
-
+import time
 
 # To get rid of future warnings, specifically from hashClass(), function _getInfo_():
 # FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
@@ -82,12 +81,18 @@ class Hashing:
 
         h = Hashing()
 
+        # Creating start, stop, and duration variables to time how long the functions take
+        timeToHashStart = time.time()
+
         # The hashes were all showing up as same hash and salt, so created the function and now calling the function 100 times
         # reference: https://stackoverflow.com/questions/4264634/more-pythonic-way-to-run-a-process-x-times
         # the range (100) at the current setup within this python version and IDE, is creating 100 hashes
         # within the newNum() function and newNumPrint() function for loops.
         for item in range(100):
             h.newNum()
+
+        timeToHashEnd = time.time()
+        timeToHashDuration = timeToHashEnd - timeToHashStart
 
         print("\n100 values have been added.\n")
 
@@ -110,6 +115,9 @@ class Hashing:
         # the user's entry of the key).
         a = MyDataframe.where(MyDataframe == retrieveInput).dropna(how='all').dropna(axis=1)
 
+        # Creating start, stop, and duration variables to time how long the functions take
+        timeToRetrieveStart = time.time()
+
         if a is not None:
             # Getting the key index using the dropna() method assigned variable, and assigning this index the
             # variable newIndex
@@ -123,6 +131,9 @@ class Hashing:
             pd.options.display.width = None
             keyRow = (MyDataframe.iloc[newIndex])
             print('Printing the requested hashed key and assigned random 100 number value:\n', keyRow, "\n")
+
+            timeToRetrieveEnd = time.time()
+            timeToRetrieveDuration = timeToRetrieveEnd - timeToRetrieveStart
 
         else:
             print("Error")
@@ -194,7 +205,13 @@ class Hashing:
                 reader = pd.read_excel(r'MyHashTable.xlsx', index_col=0)
                 if reader.empty == False:
 
+                    # Creating start, stop, and duration variables to time how long the functions take
+                    timeToDeleteStart = time.time()
+
                     reader = pd.DataFrame([])
+
+                    timeToDeleteEnd = time.time()
+                    timeToDeleteDuration = timeToDeleteEnd - timeToDeleteStart
 
                     reader.to_excel('MyHashTable.xlsx')
                     writer.close()
