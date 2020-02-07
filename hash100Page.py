@@ -95,6 +95,8 @@ class Hashing:
         timeToHashDuration = timeToHashEnd - timeToHashStart
 
         print("\n100 values have been added.\n")
+        print("\nThe timing it took to add 100 random values with hashes/salt to the excel file is",
+              timeToHashDuration,"seconds\n")
 
     def _getInfo_(self):
 
@@ -134,6 +136,9 @@ class Hashing:
 
             timeToRetrieveEnd = time.time()
             timeToRetrieveDuration = timeToRetrieveEnd - timeToRetrieveStart
+
+            print("\nThe timing it took to retrieve a random value with hash/salt from the excel file is",
+                  timeToRetrieveDuration, "seconds\n")
 
         else:
             print("Error")
@@ -217,6 +222,10 @@ class Hashing:
                     writer.close()
 
                     print("\nThe file has been permanently deleted.\n")
+
+                    print("\nThe timing it took to delete 100 random values with hashes/salt from the excel file is",
+                          timeToDeleteDuration, "seconds\n")
+
                     main()
                 else:
                     print("\nThis file was empty. Nothing was deleted.\n")
