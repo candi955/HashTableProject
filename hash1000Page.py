@@ -2,8 +2,6 @@
 # of 1,000 random hash table entries, deletions, and removals
 # Initially, a menu shows (menu() function at bottom of program) to offer the user choices
 
-# In this project I not only practice hash tables, but also the use of color within my output, using both class color
-# variable assignment, and the library 'termcolor'.
 
 # reference: https://docs.python.org/3/library/hashlib.html
 # https://pypi.org/project/hashlib/
@@ -69,10 +67,10 @@ class Hashing:
             my_hash_table = {k: dataRandom}
 
             myNewDataframe = pd.DataFrame.from_dict(my_hash_table, orient='index')
-            writer = pd.ExcelWriter('MyHashTable.xlsx', engine='openpyxl')
-            writer.book = load_workbook('MyHashTable.xlsx')
+            writer = pd.ExcelWriter('MyHashTable1000.xlsx', engine='openpyxl')
+            writer.book = load_workbook('MyHashTable1000.xlsx')
             writer.sheets = dict((ws.title, ws) for ws in writer.book.worksheets)
-            reader = pd.read_excel(r'MyHashTable.xlsx')
+            reader = pd.read_excel(r'MyHashTable1000.xlsx')
             myNewDataframe.to_excel(writer, index=True, header=False, startrow=len(reader) + 1)
             writer.close()
             return
@@ -103,7 +101,7 @@ class Hashing:
         retrieveInput = input("Please enter your assigned private key in order to retrieve personal employee data.\n\n" +
                               "Key: ")
 
-        MyDataframe = pd.read_excel('MyHashTable.xlsx', sheet_name="Sheet1",
+        MyDataframe = pd.read_excel('MyHashTable1000.xlsx', sheet_name="Sheet1",
                                     keep_default_na=False, na_values=[""])
 
         # references for dropna:
@@ -150,8 +148,8 @@ class Hashing:
             doubleChecking = input("\nAre you sure? Please type Yes, or No:")
             if doubleChecking == "Yes":
 
-                # Creating a variable for data being pulled from the MyEmployeeHashTable.xlsx file and placed into array format
-                book = xlrd.open_workbook('MyHashTable.xlsx')
+                # Creating a variable for data being pulled from the MyEmployeeHashTable1000.xlsx file and placed into array format
+                book = xlrd.open_workbook('MyHashTable1000.xlsx')
                 sheets = book.sheets()
                 for sheet in sheets:
                     data = np.array([[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)])
@@ -161,11 +159,11 @@ class Hashing:
                 # https://www.shanelynn.ie/using-pandas-dataframe-creating-editing-viewing-data-in-python/
                 # https://stackoverflow.com/questions/44931834/pandas-drop-function-error-label-not-contained-in-axis
                 writer = pd.ExcelWriter(book)
-                writer.book = load_workbook('MyHashTable.xlsx')
+                writer.book = load_workbook('MyHashTable1000.xlsx')
                 writer.sheets = dict((ws.title, ws) for ws in writer.book.worksheets)
-                reader = pd.read_excel(r'MyHashTable.xlsx', index_col=0)
+                reader = pd.read_excel(r'MyHashTable1000.xlsx', index_col=0)
                 reader.drop(retrieveInput, axis=0, inplace=True)
-                reader.to_excel('MyHashTable.xlsx')  ##, index=True, header=False, startrow=len(reader)-1)
+                reader.to_excel('MyHashTable1000.xlsx')  ##, index=True, header=False, startrow=len(reader)-1)
                 writer.close()
 
                 print("\nThe file has been permanently deleted.\n")
@@ -184,7 +182,7 @@ class Hashing:
 
     def _deletingAll_(self):
 
-        MyDataframe = pd.read_excel('MyHashTable.xlsx', sheet_name="Sheet1",
+        MyDataframe = pd.read_excel('MyHashTable1000.xlsx', sheet_name="Sheet1",
                                     keep_default_na=False, na_values=[""])
 
         # Creating user-input and using the pandas drop() method to allow deletion requests
@@ -194,8 +192,8 @@ class Hashing:
             doubleChecking = input("Are you sure? Please type Yes, or No:")
             if doubleChecking == "Yes":
 
-                # Creating a variable for data being pulled from the MyEmployeeHashTable.xlsx file and placed into array format
-                book = xlrd.open_workbook('MyHashTable.xlsx')
+                # Creating a variable for data being pulled from the MyEmployeeHashTable1000.xlsx file and placed into array format
+                book = xlrd.open_workbook('MyHashTable1000.xlsx')
                 sheets = book.sheets()
                 for sheet in sheets:
                     data = np.array([[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)])
@@ -205,9 +203,9 @@ class Hashing:
                 # https://www.shanelynn.ie/using-pandas-dataframe-creating-editing-viewing-data-in-python/
                 # https://stackoverflow.com/questions/44931834/pandas-drop-function-error-label-not-contained-in-axis
                 writer = pd.ExcelWriter(book)
-                writer.book = load_workbook('MyHashTable.xlsx')
+                writer.book = load_workbook('MyHashTable1000.xlsx')
                 writer.sheets = dict((ws.title, ws) for ws in writer.book.worksheets)
-                reader = pd.read_excel(r'MyHashTable.xlsx', index_col=0)
+                reader = pd.read_excel(r'MyHashTable1000.xlsx', index_col=0)
                 if reader.empty == False:
 
                     # Creating start, stop, and duration variables to time how long the functions take
@@ -218,7 +216,7 @@ class Hashing:
                     timeToDeleteEnd = time.time()
                     timeToDeleteDuration = timeToDeleteEnd - timeToDeleteStart
 
-                    reader.to_excel('MyHashTable.xlsx')
+                    reader.to_excel('MyHashTable1000.xlsx')
                     writer.close()
 
                     print("\nThe file has been permanently deleted.\n")

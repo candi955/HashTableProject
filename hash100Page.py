@@ -2,8 +2,6 @@
 # of 100 random hash table entries, deletions, and removals
 # Initially, a menu shows (menu() function at bottom of program) to offer the user choices
 
-# In this project I not only practice hash tables, but also the use of color within my output, using both class color
-# variable assignment, and the library 'termcolor'.
 
 # reference: https://docs.python.org/3/library/hashlib.html
 # https://pypi.org/project/hashlib/
